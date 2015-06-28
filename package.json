@@ -1,8 +1,9 @@
 {
 	"name": "college_house",
 	"dependencies": {
-		"webdriverio": "*",
-		"express": "*",
-		"body-parser": "*"
+		"webdriverio": "2.4.5",
+		"express": "4.13.0",
+		"body-parser": "1.13.1",
+		"selenium-standalone": "4.4.2"
 	}
 }
