@@ -1,0 +1,8 @@
+{
+	"name": "college_house",
+	"dependencies": {
+		"webdriverio": "*",
+		"express": "*",
+		"body-parser": "*"
+	}
+}

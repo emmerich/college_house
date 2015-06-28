@@ -1,0 +1,94 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <h1>College House Management Application</h1>
+            </header>
+
+            <!-- Add your site or application content here -->
+            <section>
+                <p>Welcome to the College House Management Application.</p>
+                <div>
+                    <input id="exit" type="button" value="Exit" />
+                </div>
+            </section>
+
+            <section>
+                <h2>Open Channels</h2>
+                <p>Click the channels you would like to open, then click "Open"</p>
+                <div id="open_channels">
+
+                    <div id="open_channels_submit_container">
+                        <input id="open_channels_submit" type="button" value="Open" />
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <script src="js/jquery-2.1.4.min.js"></script>
+        <script>
+            $('#exit').click(function() {
+                $.ajax({
+                    url: '/exit',
+                    type: 'GET'
+                });
+            });
+
+            $('#open_channels_submit').click(function() {
+                var channelsToOpen = [].map.call($('.channel_checkbox:checked'), function(el) {
+                    return el.name;
+                });
+
+                $.ajax({
+                    url: '/open_channels', 
+                    type: 'POST', 
+                    contentType: 'application/json', 
+                    data: JSON.stringify({
+                        'channels': channelsToOpen
+                    })
+                });
+            });
+
+            $.ajax('/channels', {
+                dataType: 'json',
+                success: function(channels) {
+                    console.log(channels);
+                    channels.forEach(function(channel) {
+                        var container = $('<div></div>').attr({
+                            'class': 'channel_container'
+                        });
+
+                        container.append($('<label></label>').attr({
+                            'for': channel
+                        }).text(channel));
+
+                        container.append($('<input/>').attr({
+                            'type': 'checkbox',
+                            'name': channel,
+                            'value': channel,
+                            'checked': 'checked',
+                            'id': channel,
+                            'class': 'channel_checkbox'
+                        }));
+
+                        $('#open_channels_submit_container').before(container);
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>
