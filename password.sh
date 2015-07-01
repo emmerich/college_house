@@ -1,3 +1,3 @@
 #!/bin/bash
 export MASTER_PASSWORD=$1
-node ./bin/run.js
+node ./bin/encrypt.js $2

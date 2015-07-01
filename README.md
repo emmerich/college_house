@@ -3,9 +3,18 @@
 ## Setup
 * Install Nodejs
 * Clone the repository
-* Run ./install.sh
+* Run npm install
+* Run selenium-standalone install
 * Create a configuration file (see below)
-* Run ./run.sh
+* Run ./run.sh MASTER_PASSWORD
+
+## Encrypting a password
+Passwords are encrypted using a master password. Use the following utility to
+encrypt a password:
+```
+./password.sh MASTER_PASSWORD PASSWORD_TO_ENCRYPT
+```
+Make sure to use the same master password as you use when you run the application.
 
 ## Configuration File
 The only thing missing from the repository is a configuration file. Create a configuration file in the root direction and name is `configuration.json`. Here is a template:
@@ -14,8 +23,8 @@ The only thing missing from the repository is a configuration file. Create a con
 	"channels": {
 		"Example Channel": {
 			"url": "https://mail.google.com",
-			"username": "myusername",
-			"password": "mypassword"
+			"username": "username",
+			"password": "encrypted_password"
 		}
 	}
 }

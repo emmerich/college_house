@@ -4,6 +4,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var spawn = require('child_process').spawn;
+var login = require('../lib/login');
 var client;
 var server;
 var openWindows = [];
@@ -30,7 +31,7 @@ var webdriverOpts = {
 
 // Set up Express to handle HTTP requests
 // Static will ensure any requests for files go to the file system.
-app.use(express.static('.'));
+app.use(express.static('www'));
 
 // Body Parser turns JSON POST data into JavaScript objects
 app.use(bodyParser.json());
@@ -49,6 +50,9 @@ app.post('/open_channels', function (req, res) {
 
 		// Open the channel in a new window
 		openWindows.push(client.newWindow(channelLookup.url));
+
+		// Log in with username/password
+		login(client, channel, channelLookup);
 	});
 
 	res.status(200).end();
