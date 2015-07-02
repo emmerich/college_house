@@ -3,7 +3,8 @@ var fs = require('fs');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var spawn = require('child_process').spawn;
+var child_process = require('child_process');
+var spawn = child_process.spawn;
 var login = require('../lib/login');
 var client;
 var server;
@@ -18,13 +19,16 @@ var PORT = 8080;
 // Load the application configuration file
 var config = JSON.parse(fs.readFileSync('configuration.json', 'utf8'));
 
+// Get the usenrame of the current user
+var username = String(child_process.execSync( "whoami", { encoding: 'utf8', timeout: 1000 } )).trim();
+
 // Options for webdriver.
 var webdriverOpts = {
 	desiredCapabilities: {
 		browserName: 'chrome',
 		chromeOptions: {
 			// Try to use the default profile
-			args: ['--user-data-dir=/Users/stvnhl/Library/Application Support/Google/Chrome/']
+			args: ['--user-data-dir=/Users/' + username + '/Library/Application Support/Google/Chrome/']
 		}
 	}
 };
