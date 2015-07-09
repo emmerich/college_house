@@ -8,7 +8,16 @@ var spawn = child_process.spawn;
 var login = require('../lib/login');
 var client;
 var server;
-var openWindows = [];
+
+// Check if chrome is running
+var chrome = String(child_process.execSync("ps x | grep \"Chrome.app/Contents/MacOS/Google Chrome\"")).trim();
+var numberOfProcesses = chrome.match(/\n/g).length;
+
+// There should only be one process with Chrome running (the grep). If more, tell the user to close the browser.
+if(numberOfProcesses > 1) {
+	console.log('Please close Google Chrome (Cmd+Q) before proceeding.');
+	process.exit(1);
+}
 
 // Starting message
 console.log('College House Management Application starting up..');
@@ -53,7 +62,7 @@ app.post('/open_channels', function (req, res) {
 		var channelLookup = config.channels[channel];
 
 		// Open the channel in a new window
-		openWindows.push(client.newWindow(channelLookup.url));
+		client.newWindow(channelLookup.url);
 
 		// Log in with username/password
 		login(client, channel, channelLookup);
@@ -66,23 +75,28 @@ app.post('/open_channels', function (req, res) {
 app.get('/exit', function(req, res) {
 	res.status(200).end();
 
-	console.log('Closing open windows..');
-	openWindows.forEach(function(w) {
-		w.close();
+	console.log('Closing open windows and deleting cookies..');
+	client.getTabIds(function(err,response) {
+		if(response) {
+			var allTabs = response.slice(0);
+
+			// Close all tabs
+			for(var i = 1; i<allTabs.length; i++) {
+				this.switchTab(allTabs[i]).deleteCookie().close();
+			}	
+		}
 	});
 
 	console.log('Closing browser..');
-	client.end();
-
-	client.call(function() {
+	client.end().then(function() {
 		console.log('Closing selenium-standalone..');
-		seleniumStandaloneProcess.kill('SIGINT');
+		seleniumStandaloneProcess.kill('SIGINT');	
 	});
 
 	setTimeout(function() {
 		console.log('Exiting application..');
 		process.exit(0);
-	}, 5000);
+	}, 7000);
 });
 
 // Start the selenium-standalone as a child process
@@ -104,4 +118,4 @@ setTimeout(function() {
 	  	// Now open a new web browser and go to the management page.
 		client.url('http://localhost:' + PORT);
 	});
-}, 5000);
+}, 7000);
