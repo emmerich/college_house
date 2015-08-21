@@ -39,10 +39,10 @@ var PORT = 8080;
 var webdriverOpts = {
 	desiredCapabilities: {
 		browserName: 'chrome'
-		// chromeOptions: {
-		// 	// Try to use the default profile
-		// 	args: ['--user-data-dir="' + chromeUserDirectory + '"']
-		// }
+		chromeOptions: {
+			// Try to use the default profile
+			args: ['user-data-dir="' + chromeUserDirectory + '"']
+		}
 	}
 };
 
@@ -80,27 +80,27 @@ app.get('/exit', function(req, res) {
 	res.status(200).end();
 
 	console.log('Closing open windows and deleting cookies..');
-	client.getTabIds(function(err,response) {
+	client.getTabIds(function(err, response) {
 		if(response) {
 			var allTabs = response.slice(0);
 
 			// Close all tabs
 			for(var i = 1; i<allTabs.length; i++) {
 				this.switchTab(allTabs[i]).deleteCookie().close();
-			}	
+			}
 		}
 	});
 
-	console.log('Closing browser..');
+	// console.log('Closing browser..');
 	// client.end().then(function() {
 	// 	console.log('Closing selenium-standalone..');
 	// 	seleniumStandaloneProcess.kill('SIGINT');	
 	// });
 
-	setTimeout(function() {
+	// setTimeout(function() {
 		console.log('Exiting application..');
 		process.exit(0);
-	}, 7000);
+	// }, 7000);
 });
 
 // Start the selenium-standalone as a child process
