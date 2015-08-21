@@ -92,10 +92,10 @@ app.get('/exit', function(req, res) {
 	});
 
 	console.log('Closing browser..');
-	client.end().then(function() {
-		console.log('Closing selenium-standalone..');
-		seleniumStandaloneProcess.kill('SIGINT');	
-	});
+	// client.end().then(function() {
+	// 	console.log('Closing selenium-standalone..');
+	// 	seleniumStandaloneProcess.kill('SIGINT');	
+	// });
 
 	setTimeout(function() {
 		console.log('Exiting application..');
@@ -104,25 +104,22 @@ app.get('/exit', function(req, res) {
 });
 
 // Start the selenium-standalone as a child process
-console.log('Starting selenium-standalone server..');
-var seleniumStandaloneProcess = spawn('selenium-standalone', ['start']);
-seleniumStandaloneProcess.on('error', function(err) {
-	console.log('Error starting selenium-standalone', err);
-});
+// console.log('Starting selenium-standalone server..');
+// var seleniumStandaloneProcess = spawn('selenium-standalone', ['start']);
 
 // Run the HTTP server
-setTimeout(function() {
-	console.log('Starting http server..');
-	server = app.listen(PORT, function () {
-		var host = server.address().address;
-		var port = server.address().port;
+// setTimeout(function() {
+console.log('Starting http server..');
+server = app.listen(PORT, function () {
+	var host = server.address().address;
+	var port = server.address().port;
 
-		console.log('College House Management Application running on http://localhost:%s', port);
+	console.log('College House Management Application running on http://localhost:%s', port);
 
-	  	// Initialize the WebDriver client.
-	  	client = webdriverio.remote(webdriverOpts).init();
+  	// Initialize the WebDriver client.
+  	client = webdriverio.remote(webdriverOpts).init();
 
-	  	// Now open a new web browser and go to the management page.
-		client.url('http://localhost:' + PORT);
-	});
-}, 7000);
+  	// Now open a new web browser and go to the management page.
+	client.url('http://localhost:' + PORT);
+});
+// }, 7000);
