@@ -106,6 +106,9 @@ app.get('/exit', function(req, res) {
 // Start the selenium-standalone as a child process
 console.log('Starting selenium-standalone server..');
 var seleniumStandaloneProcess = spawn('selenium-standalone', ['start']);
+seleniumStandaloneProcess.on('error', function(err) {
+	console.log('Error starting selenium-standalone', err);
+});
 
 // Run the HTTP server
 setTimeout(function() {
