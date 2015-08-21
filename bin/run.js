@@ -17,13 +17,22 @@ var chromeUserDirectory = config.chromeUserDirectory;
 var psCommand = config.psCommand;
 
 // Check if chrome is running
-var chrome = String(child_process.execSync(psCommand + " | grep " + chromePath)).trim();
-var numberOfProcesses = chrome.match(/\n/g).length;
+var chrome;
 
-// There should only be one process with Chrome running (the grep). If more, tell the user to close the browser.
-if(numberOfProcesses > 1) {
-	console.log('Please close Google Chrome (Cmd+Q on Mac, Alt+F4 on Windows) before proceeding.');
-	process.exit(1);
+try {
+	chrome = String(child_process.execSync(psCommand + " | grep " + chromePath)).trim();
+} catch(e) {
+	console.log(e);
+}
+
+if(chrome) {
+	var numberOfProcesses = chrome.match(/\n/g).length;
+
+	// There should only be one process with Chrome running (the grep). If more, tell the user to close the browser.
+	if(numberOfProcesses > 1) {
+		console.log('Please close Google Chrome (Cmd+Q on Mac, Alt+F4 on Windows) before proceeding.');
+		process.exit(1);
+	}	
 }
 
 // Starting message
