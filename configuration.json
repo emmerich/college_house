@@ -1,0 +1,44 @@
+{
+	"channels": {
+		"Booking.com": {
+			"url": "https://admin.booking.com/hotel/hoteladmin/login.html",
+			"username": "579502",
+			"password": "577123f0be00c75de0"
+		},
+
+		"Expedia": {
+			"url": "https://www.expediapartnercentral.com/Account/Logon",
+			"username": "info@42b.co.nz",
+			"password": "577123f0be00c45e"
+		},
+
+		"HostelBookers": {
+			"url": "https://admin.hostelbookers.com",
+			"username": "42bCollege",
+			"password": "577123f0be00c75f"
+		},
+
+		"HostelWorld.com": {
+			"url": "https://secure.hostelworld.com/inbox/",
+			"username": "Mat",
+			"password": "577123f0be00c45ee0",
+			"hostel_number": "75559"
+		},
+
+		"Agoda": {
+			"url": "https://ycs.agoda.com/en-us/Login?",
+			"username": "info@42b.co.nz",
+			"password": "577123f0be00c458e0"
+		},
+
+		"BookIt": {
+			"url": "https://business.bookitsecure.com",
+			"username": "Collegehouse",
+			"password": "577123f0be00c45d"
+		},
+
+		"AirBnB" : {
+			"url": "https://www.airbnb.co.nz/login"
+		}
+	}
+}
