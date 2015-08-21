@@ -44,5 +44,5 @@
 
 	"psCommand": "ps -W",
 	"chromePath": "chrome.exe",
-	"chromeUserDirectory": "\"C:\\Users\\Matt\\college_house\""
+	"chromeUserDirectory": "C:/Users/Matt/AppData/Local/Google/Chrome/User Data"
 }

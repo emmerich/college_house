@@ -41,7 +41,7 @@ var webdriverOpts = {
 		browserName: 'chrome',
 		chromeOptions: {
 			// Try to use the default profile
-			args: ['user-data-dir="' + chromeUserDirectory + '"']
+			args: ['user-data-dir=\'' + chromeUserDirectory + '\'']
 		}
 	}
 };
