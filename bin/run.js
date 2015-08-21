@@ -9,13 +9,20 @@ var login = require('../lib/login');
 var client;
 var server;
 
+// Load the application configuration file
+var config = JSON.parse(fs.readFileSync('configuration.json', 'utf8'));
+
+var chromePath = config.chromePath;
+var chromeUserDirectory = config.chromeUserDirectory;
+var psCommand = config.psCommand;
+
 // Check if chrome is running
-var chrome = String(child_process.execSync("ps x | grep \"Chrome.app/Contents/MacOS/Google Chrome\"")).trim();
+var chrome = String(child_process.execSync(psCommand + " | grep " + chromePath).trim();
 var numberOfProcesses = chrome.match(/\n/g).length;
 
 // There should only be one process with Chrome running (the grep). If more, tell the user to close the browser.
 if(numberOfProcesses > 1) {
-	console.log('Please close Google Chrome (Cmd+Q) before proceeding.');
+	console.log('Please close Google Chrome (Cmd+Q on Mac, Alt+F4 on Windows) before proceeding.');
 	process.exit(1);
 }
 
@@ -25,19 +32,13 @@ console.log('College House Management Application starting up..');
 // The PORT that the web server will run on.
 var PORT = 8080;
 
-// Load the application configuration file
-var config = JSON.parse(fs.readFileSync('configuration.json', 'utf8'));
-
-// Get the usenrame of the current user
-var username = String(child_process.execSync( "whoami", { encoding: 'utf8', timeout: 1000 } )).trim();
-
 // Options for webdriver.
 var webdriverOpts = {
 	desiredCapabilities: {
 		browserName: 'chrome',
 		chromeOptions: {
 			// Try to use the default profile
-			args: ['--user-data-dir=/Users/' + username + '/Library/Application Support/Google/Chrome/']
+			args: ['--user-data-dir="' + chromeUserDirectory + '"']
 		}
 	}
 };
