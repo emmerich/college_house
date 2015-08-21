@@ -16,23 +16,17 @@ var chromePath = config.chromePath;
 var chromeUserDirectory = config.chromeUserDirectory;
 var psCommand = config.psCommand;
 
-// Check if chrome is running
-var chrome;
-
 try {
-	chrome = String(child_process.execSync(psCommand + " | grep " + chromePath)).trim();
-} catch(e) {
-	console.log(e);
-}
-
-if(chrome) {
+	var chrome = String(child_process.execSync(psCommand + " | grep " + chromePath)).trim();
 	var numberOfProcesses = chrome.match(/\n/g).length;
 
 	// There should only be one process with Chrome running (the grep). If more, tell the user to close the browser.
 	if(numberOfProcesses > 1) {
 		console.log('Please close Google Chrome (Cmd+Q on Mac, Alt+F4 on Windows) before proceeding.');
 		process.exit(1);
-	}	
+	}
+} catch(e) {
+	// If the command throws an exception, chrome isn't running and we can proceed.
 }
 
 // Starting message
