@@ -17,7 +17,7 @@ var chromeUserDirectory = config.chromeUserDirectory;
 var psCommand = config.psCommand;
 
 // Check if chrome is running
-var chrome = String(child_process.execSync(psCommand + " | grep " + chromePath).trim();
+var chrome = String(child_process.execSync(psCommand + " | grep " + chromePath)).trim();
 var numberOfProcesses = chrome.match(/\n/g).length;
 
 // There should only be one process with Chrome running (the grep). If more, tell the user to close the browser.
