@@ -38,7 +38,7 @@ var PORT = 8080;
 // Options for webdriver.
 var webdriverOpts = {
 	desiredCapabilities: {
-		browserName: 'chrome'
+		browserName: 'chrome',
 		chromeOptions: {
 			// Try to use the default profile
 			args: ['user-data-dir="' + chromeUserDirectory + '"']
